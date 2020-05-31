@@ -17,12 +17,12 @@
     "persistent": true
   },
   "permissions": [
-    "*://*/*"
+    "<all_urls>"
   ],
   "content_scripts": [
     {
       "matches": [
-        "*://*/*"
+        "<all_urls>"
       ],
       "js": [
         "src/inject/inject.js"

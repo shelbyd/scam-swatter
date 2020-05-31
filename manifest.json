@@ -1,0 +1,32 @@
+{
+  "name": "Scam Swatter",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Warns when common scammer tactics are performed on webpages.",
+  "homepage_url": "http://github.com/shelbyd/scam-swatter",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "src/bg/background.js"
+    ],
+    "persistent": true
+  },
+  "permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "src/inject/inject.js"
+      ]
+    }
+  ]
+}

@@ -126,6 +126,7 @@ function placeElementRandomly(destination, element) {
 
 var REMOTE_ACCESS_SOFTWARE_HOSTS = [
   'anydesk.com',
+  'pchelponline.us',
   'secure.logmeinrescue.com',
   'www.teamviewer.com',
   'www.zoho.com',

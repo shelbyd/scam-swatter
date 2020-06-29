@@ -128,6 +128,7 @@ var REMOTE_ACCESS_SOFTWARE_HOSTS = [
   'anydesk.com',
   'pchelponline.us',
   'secure.logmeinrescue.com',
+  'secure.logmeinrescue-enterprise.com',
   'www.teamviewer.com',
   'www.zoho.com',
 ];

@@ -125,6 +125,7 @@ function placeElementRandomly(destination, element) {
 }
 
 var REMOTE_ACCESS_SOFTWARE_HOSTS = [
+  '150.co.il',
   'anydesk.com',
   'pchelponline.us',
   'secure.logmeinrescue.com',

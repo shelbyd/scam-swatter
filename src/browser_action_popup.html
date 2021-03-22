@@ -1,0 +1,22 @@
+<html>
+  <body>
+    <div id="page">
+      <div v-if="token">
+        <p><strong>Device is being monitored</strong></p>
+        <p>You can change the account being used to monitor by doing the setup again.</p>
+      </div>
+
+      <h1>Setup Device</h1>
+
+      <p style="color: darkred">{{ errorMessage }}</p>
+
+      <p><label>Device setup code: <input type="text" v-model="setupCode"/></label></p>
+      <p><button @click="trySetup()" :disabled="setupInProgress">Setup</button></p>
+
+      <p><button @click="close()">Close</button></p>
+    </div>
+  </body>
+
+  <script src="vue.js"></script>
+  <script src="browser_action_popup.js"></script>
+</html>

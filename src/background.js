@@ -23,7 +23,6 @@ async function reportSuspiciousActivity(activity) {
     activityData: activity,
     detectedAt: (new Date()).toISOString(),
   };
-  console.log('decorated', decorated);
 
   const response = await fetch(`${await scamSwatterBaseUrl()}/.netlify/functions/report-suspicious-activity`, {
     headers: {
@@ -34,6 +33,7 @@ async function reportSuspiciousActivity(activity) {
   });
 
   if (!response.ok) {
-    console.error(response);
+    // TODO(shelbyd): Try reporting activity later if server is down for some reason.
+    console.error('Failed to report suspicious activity', response);
   }
 }

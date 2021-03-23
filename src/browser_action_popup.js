@@ -10,18 +10,7 @@ var app = new Vue({
     async trySetup() {
       this.setupInProgress = true;
 
-      const installType = await new Promise(resolve => {
-        chrome.management.get(
-          chrome.runtime.id,
-          extensionInfo => resolve(extensionInfo.installType)
-        );
-      });
-
-      const baseUrl =
-          installType === "development" ?
-          "http://localhost:8888" :
-          "https://www.scamswatter.com";
-      const response = await fetch(`${baseUrl}/.netlify/functions/setup-new-device`, {
+      const response = await fetch(`${await scamSwatterBaseUrl()}/.netlify/functions/setup-new-device`, {
         body: JSON.stringify({setupCode: this.setupCode.trim()}),
         method: 'POST',
       });
@@ -36,9 +25,7 @@ var app = new Vue({
       }
 
       const token = body.newDevice.longTermToken;
-      await new Promise(resolve => {
-        chrome.storage.local.set({longTermToken: token}, resolve);
-      });
+      await scamSwatterSetToken(token);
       this.token = token;
 
       this.setupInProgress = false;
@@ -48,10 +35,6 @@ var app = new Vue({
     },
   },
   async mounted() {
-    this.token = await new Promise(resolve => {
-      chrome.storage.local.get(['longTermToken'], (values) => {
-        resolve(values.longTermToken);
-      });
-    });
+    this.token = await scamSwatterToken();
   }
 })

@@ -7,10 +7,20 @@ var readyStateCheckInterval = setInterval(function() {
 
 var SUSPICIOUS_ACTIVITY = {
   INSPECTOR_OPENED: {
-
+    type: 'INSPECTOR_OPENED',
+    data: {
+      url() {
+        return window.location.href;
+      },
+    },
   },
   REMOTE_ACCESS_DOWNLOADS_ON_SITE: {
-
+    type: 'REMOTE_ACCESS_DOWNLOADS_ON_SITE',
+    data: {
+      url() {
+        return window.location.href;
+      },
+    },
   },
 }
 
@@ -25,8 +35,34 @@ function initializeScamSwatter() {
   }
 }
 
-function reportSuspiciousActivity(activityDescription) {
-  alert('Suspicious activity!');
+async function reportSuspiciousActivity(activityDescription) {
+  const evaluated = await evaluateFunctions(activityDescription);
+
+  chrome.runtime.sendMessage({
+    scamSwatter: {
+      type: 'suspicious_activity',
+      data: evaluated,
+    },
+  });
+}
+
+async function evaluateFunctions(obj) {
+  const result = {};
+  for (const key in obj) {
+    if (!obj.hasOwnProperty(key)) continue;
+
+    const val = obj[key];
+    if (typeof val === 'function') {
+      result[key] = await val();
+    } else if (val == null) {
+      result[key] = null;
+    } else if (typeof val === 'object') {
+      result[key] = await evaluateFunctions(val);
+    } else {
+      result[key] = val;
+    }
+  }
+  return result;
 }
 
 function onInspectorOpened(callback) {

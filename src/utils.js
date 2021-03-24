@@ -1,14 +1,6 @@
-async function scamSwatterBaseUrl() {
-  const installType = await new Promise(resolve => {
-    chrome.management.get(
-      chrome.runtime.id,
-      extensionInfo => resolve(extensionInfo.installType)
-    );
-  });
-
-  return installType === "development" ?
-      "http://localhost:8888" :
-      "https://www.scamswatter.com";
+function scamSwatterBaseUrl() {
+  // return 'http://localhost:8888';
+  return 'https://www.scamswatter.com';
 }
 
 async function scamSwatterToken() {

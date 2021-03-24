@@ -4,6 +4,11 @@ chrome.runtime.onInstalled.addListener(function(details) {
       url: 'https://www.scamswatter.com/chrome-extension-post-install',
     });
   }
+  ensureUninstallUrl();
+});
+
+chrome.runtime.onStartup.addListener(async function() {
+  ensureUninstallUrl();
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, respond) {

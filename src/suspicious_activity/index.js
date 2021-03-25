@@ -42,7 +42,7 @@ class InspectorOpened extends SuspiciousActivity {
 
   details() {
     const host = new URL(this.url).host;
-    return `Developer tools opened on ${host}`.
+    return `Developer tools opened on ${host}.`;
   }
 }
 

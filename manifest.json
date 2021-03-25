@@ -12,6 +12,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+      "src/suspicious_activity/index.js",
       "src/utils.js",
       "src/background.js"
     ],
@@ -36,6 +37,7 @@
         "<all_urls>"
       ],
       "js": [
+        "src/suspicious_activity/index.js",
         "src/inject.js"
       ]
     }

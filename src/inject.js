@@ -5,64 +5,26 @@ var readyStateCheckInterval = setInterval(function() {
   }
 }, 10);
 
-var SUSPICIOUS_ACTIVITY = {
-  INSPECTOR_OPENED: {
-    type: 'INSPECTOR_OPENED',
-    data: {
-      url() {
-        return window.location.href;
-      },
-    },
-  },
-  REMOTE_ACCESS_DOWNLOADS_ON_SITE: {
-    type: 'REMOTE_ACCESS_DOWNLOADS_ON_SITE',
-    data: {
-      url() {
-        return window.location.href;
-      },
-    },
-  },
-}
-
 function initializeScamSwatter() {
   console.log("ScamSwatter initializing...");
 
   onInspectorOpened(
-      function() { reportSuspiciousActivity(SUSPICIOUS_ACTIVITY.INSPECTOR_OPENED); });
+      function() { reportSuspiciousActivity(InspectorOpened); });
 
   if (includesRemoteAccessDownload()) {
-    reportSuspiciousActivity(SUSPICIOUS_ACTIVITY.REMOTE_ACCESS_DOWLOADS_ON_SITE);
+    reportSuspiciousActivity(RemoteAccessDownloadsOnSite);
   }
 }
 
-async function reportSuspiciousActivity(activityDescription) {
-  const evaluated = await evaluateFunctions(activityDescription);
+async function reportSuspiciousActivity(activityClass) {
+  const instance = await activityClass.create();
 
   chrome.runtime.sendMessage({
     scamSwatter: {
       type: 'suspicious_activity',
-      data: evaluated,
+      data: instance.typedObject(),
     },
   });
-}
-
-async function evaluateFunctions(obj) {
-  const result = {};
-  for (const key in obj) {
-    if (!obj.hasOwnProperty(key)) continue;
-
-    const val = obj[key];
-    if (typeof val === 'function') {
-      result[key] = await val();
-    } else if (val == null) {
-      result[key] = null;
-    } else if (typeof val === 'object') {
-      result[key] = await evaluateFunctions(val);
-    } else {
-      result[key] = val;
-    }
-  }
-  return result;
 }
 
 function onInspectorOpened(callback) {

@@ -24,8 +24,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, respond) {
 });
 
 async function reportSuspiciousActivity(activity) {
+  const parsed = SuspiciousActivity.parseTyped(activity);
   const decorated = {
-    activityData: activity,
+    activityData: parsed.typedObject(),
     detectedAt: (new Date()).toISOString(),
   };
 

@@ -97,7 +97,7 @@ class ExtensionUninstalled extends SuspiciousActivity {
   ACTIVITY_MAP[klass.id()] = klass;
 });
 
-if (exports != null) {
+try {
   exports.SuspiciousActivity = SuspiciousActivity;
   exports.ACTIVITY_MAP = ACTIVITY_MAP;
-}
+} catch (e) {}

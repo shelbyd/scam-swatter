@@ -96,3 +96,8 @@ class ExtensionUninstalled extends SuspiciousActivity {
 ].forEach(klass => {
   ACTIVITY_MAP[klass.id()] = klass;
 });
+
+if (exports != null) {
+  exports.SuspiciousActivity = SuspiciousActivity;
+  exports.ACTIVITY_MAP = ACTIVITY_MAP;
+}
